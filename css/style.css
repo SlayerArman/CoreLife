@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family:
+    'Segoe UI',
+    sans-serif;
+
+    background: #101010;
+    color: white;
+    overflow: hidden;
+}
+
+#app{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
