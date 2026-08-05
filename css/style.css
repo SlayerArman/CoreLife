@@ -9,18 +9,46 @@ html{
 }
 
 body{
-    font-family:
-    'Segoe UI',
-    sans-serif;
-
+    font-family: 'Segoe UI', sans-serif;
     background: #101010;
     color: white;
-    overflow: hidden;
 }
 
 #app{
     width: 100vw;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
     position: relative;
     overflow: hidden;
+}
+
+.app-header{
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    background: #242424;
+    border-bottom: 1px solid #333;
+}
+
+.logo{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.app-layout{
+    flex: 1;
+    display: flex;
+}
+
+#comic-view{
+    flex: 1;
+    background: #1d1d1d;
+}
+
+#sidebar{
+    width: 220px;
+    background: #222;
+    border-left: 1px solid #333;
 }
