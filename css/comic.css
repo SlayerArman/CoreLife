@@ -1,10 +1,24 @@
 #comic-view{
     flex: 1;
-    padding: flex;
+    padding: 40px;
     display: flex;
     align-items: flex-start;
     justify-content: center;
     overflow-y: auto
+}
+
+.comic-reader{
+    width: min(100%, 850px);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #1b1b1b;
+    border: 1px solid #333;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+}
+
+.comic-reader img{
+    width: 100%;
+    display: block;
 }
 
 .comic-page{

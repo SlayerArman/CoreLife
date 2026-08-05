@@ -16,33 +16,34 @@
 
     <body>
         <div id="app">
-            <header class="app-header">
-                <h1 class="logo">
-                    Core Life
-                </h1>
-            </header>
+            <div id="screen">
+                <header class="app-header">
+                    <h1 class="logo">
+                        Core Life
+                    </h1>
+                </header>
 
-            <main class="app-layout">
-                <section class="comic-view">
-                    <article class="comic-page">
-                        <div classs="comic-image">
-                            <img src="assets/comic/page1.png"
-                                alt="Comic Page 1">
+                <main class="app-layout">
+                    <section id="comic-view">
+                        <div class="comic-reader">
+                            <img
+                                src="assets/comic/page1.webp"
+                                alt="Comic Page 1"
+                                loading="eager">
                         </div>
+                    </section>
 
-                        <div class="comic-info">
-                            <h2>Page 1</h2>
+                    <aside id="sidebar">
+                        <h2>Story</h2>
+                        <nav id="level-list">
+                        </nav>
+                    </aside>
+                </main>
+            </div>
 
-                            <p>
-                                Chapter One
-                            </p>
-                        </div>
-                    </article>
-                </section>
-
-                <aside class="sidebar">
-                </aside>
-            </main>
+            <div id="overlay-root">
+                
+            </div>
         </div>
 
         <script type="module" src="js/main.js"></script>

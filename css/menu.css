@@ -1,0 +1,18 @@
+#sidebar{
+    width: 24px;
+    background: #222;
+    border-left: 1px solid #333;
+    padding: 24px;
+}
+
+#sidebar h2{
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+#level-list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
