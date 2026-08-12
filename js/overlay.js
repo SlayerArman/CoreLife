@@ -36,6 +36,7 @@ export function showLockedPageOverlay(page, onPlay){
             overlay.querySelector(".overlay-play");
         
             playButton.addEventListener("click", () => {
+                overlay.remove();
                 onPlay(page);
             });
 }

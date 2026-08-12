@@ -1,6 +1,7 @@
 import { createLevelNavigation } from "./menu.js";
 import{ showPage } from "./comic.js";
 import { showLockedPageOverlay } from "./overlay.js";
+import { startGame } from "./game.js";
 
 function handlePageSelect(page){
     showPage(page);
@@ -14,8 +15,7 @@ function handleLockedPage(page){
 }
 
 function handlePlayLevel(page){
-    console.log(
-        `Starting Level ${page.level}`
-    );
+        startGame(page);
 }
+
 createLevelNavigation(handlePageSelect, handleLockedPage);

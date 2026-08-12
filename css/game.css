@@ -64,3 +64,65 @@
 .overlay-play:hover{
     background: #4b8556;
 }
+
+.game-overlay{
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rbgaa(0, 0, 0, 0.8);
+    z-index: 1100;
+}
+
+.game-window{
+    width: mine(100%, 700px);
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    background: #1c1c1c;
+    border: 1px solid #3a3a3a;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+}
+
+.game-header{
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: #242424;
+    border-bottom: 1px solid #333;
+}
+
+.game-header h2{
+    font-size: 18px;
+}
+
+.game-exit{
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: #333;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.game-exit:hover{
+    background: #444;
+}
+
+.game-area{
+    flex: 1;
+    min-height: 440px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    color: #888;
+}
