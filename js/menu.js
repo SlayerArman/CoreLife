@@ -1,6 +1,6 @@
 import {pages} from "./pages.js"
 
-export function createLevelNavigation() {
+export function createLevelNavigation(onPageSelect) {
     const levelList = document.getElementById("level-list");
     levelList.innerHTML = "";
 
@@ -11,6 +11,9 @@ export function createLevelNavigation() {
         if (page.unlocked) {
             button.classList.add("unlocked");
             button.textContent = page.title;
+            button.addEventListener("click", () => {
+                onPageSelect(page);
+            });
         } else {
             button.classList.add("locked");
             button.innerHTML = `

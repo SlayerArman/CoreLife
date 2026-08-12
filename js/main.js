@@ -1,3 +1,8 @@
 import { createLevelNavigation } from "./menu.js";
+import{ showPage } from "./comic.js";
 
-createLevelNavigation();
+function handlePageSelect(page){
+    showPage(page);
+}
+
+createLevelNavigation(handlePageSelect);
