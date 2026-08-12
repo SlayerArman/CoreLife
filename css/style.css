@@ -41,14 +41,3 @@ body{
     flex: 1;
     display: flex;
 }
-
-#comic-view{
-    flex: 1;
-    background: #1d1d1d;
-}
-
-#sidebar{
-    width: 220px;
-    background: #222;
-    border-left: 1px solid #333;
-}

@@ -4,7 +4,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    overflow-y: auto
+    overflow-y: auto;
 }
 
 .comic-reader{
@@ -19,46 +19,4 @@
 .comic-reader img{
     width: 100%;
     display: block;
-}
-
-.comic-page{
-    width: 320px;
-    background: #232323;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid #333;
-    transition:
-        transform 0.25s,
-        box-shadow 0.25s;
-}
-
-.comic-page:hover{
-    transform: translateY(-6px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
-
-.comic-image{
-    background: #2d2d2d;
-    aspect-ratio: 3/4;
-}
-
-.comic-image img{
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-}
-
-.comic-info{
-    padding: 18px;
-}
-
-.comic-info h2{
-    font-size: 20px;
-    margin-bottom: 8px;
-}
-
-.comic-info p{
-    color: #bbbbbb;
-    font-size: 14px;
 }

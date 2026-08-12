@@ -5,4 +5,9 @@ function handlePageSelect(page){
     showPage(page);
 }
 
-createLevelNavigation(handlePageSelect);
+function handleLockedPage(page){
+    console.log(
+        `${page.title} is locked. Complete Level ${page.level} to unlock it.`
+    );
+}
+createLevelNavigation(handlePageSelect, handleLockedPage);

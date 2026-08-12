@@ -1,6 +1,6 @@
 import {pages} from "./pages.js"
 
-export function createLevelNavigation(onPageSelect) {
+export function createLevelNavigation(onPageSelect, onLockedPage) {
     const levelList = document.getElementById("level-list");
     levelList.innerHTML = "";
 
@@ -20,6 +20,9 @@ export function createLevelNavigation(onPageSelect) {
                 <img src="assets/ui/lock.png" alt="">
                 <span>${page.title}</span>
             `;
+                button.addEventListener("click", () => {
+                    onLockedPage(page);
+                });
         }
         levelList.appendChild(button);
     }

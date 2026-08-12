@@ -139,4 +139,4 @@ export const pages = [
         unlocked: false,
         level: 20
     },
-]
+];
