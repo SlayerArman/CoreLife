@@ -1,5 +1,38 @@
 const BOARD_SIZE = 8;
 
+const elements = [
+    {
+        id: "fire",
+        name: "Fire",
+        image: "assets/game/elements/fire.png"
+    },
+    {
+        id: "water",
+        name: "Water",
+        image: "assets/game/elements/wanter.png"
+    },
+    {
+        id: "earth",
+        name: "Earth",
+        image: "assets/game/elements/earth.png"
+    },
+    {
+        id: "air",
+        name: "Air",
+        image: "assets/game/elements/air.png"
+    },
+    {
+        id: "light",
+        name: "Light",
+        image: "assets/game/light.png"
+    },
+    {
+        id: "shadow",
+        name: "Shadow",
+        image: "assets/game/elements/shadow.png"
+    }
+];
+
 export function startGame(page){
     const gameOverlay = document.createElement("div");
     gameOverlay.className = "game-overlay";
@@ -47,7 +80,20 @@ function createBoard(board){
             cell.className = "board-cell";
             cell.dataset.row = row;
             cell.dataset.column = column;
+            const element = getRandomElement();
+            const image = document.createElement("img");
+            image.src = element.image;
+            image.alt = element.name;
+            image.className = "game-piece";
+            cell.dataset.element = element.id;
+            cell.appendChild(image);
             board.appendChild(cell);
         }
     }
+}
+
+function getRandomElement(){
+    const randomIndex =
+        Math.floor(Math.random() * elements.length);
+        return elements[randomIndex];
 }
