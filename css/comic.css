@@ -1,10 +1,13 @@
 #comic-view{
     flex: 1;
+    min-width: 0;
+    min-height: 0;
     padding: 40px;
     display: flex;
     align-items: flex-start;
     justify-content: center;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .comic-reader{
@@ -14,9 +17,11 @@
     background: #1b1b1b;
     border: 1px solid #333;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+    flex-shrink: 0;
 }
 
 .comic-reader img{
     width: 100%;
     display: block;
+    height: auto;
 }

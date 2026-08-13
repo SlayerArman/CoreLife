@@ -1,3 +1,5 @@
+const BOARD_SIZE = 8;
+
 export function startGame(page){
     const gameOverlay = document.createElement("div");
     gameOverlay.className = "game-overlay";
@@ -17,14 +19,18 @@ export function startGame(page){
             </div>
             
             <div class="game-area">
-                <p>
-                    Mini game coming soon...
-                </p>
+                <div class="match-board">
+                </div>
             </div>
         </div>
     `;
 
     document.body.appendChild(gameOverlay);
+
+    const board =
+        gameOverlay.querySelector(".match-board");
+
+    createBoard(board);
 
     const exitButton =
         gameOverlay.querySelector(".game-exit");
@@ -32,4 +38,16 @@ export function startGame(page){
     exitButton.addEventListener("click", () => {
             gameOverlay.remove();
     });
+}
+
+function createBoard(board){
+    for (let row = 0; row < BOARD_SIZE; row++){
+        for (let column = 0; column < BOARD_SIZE; column++){
+            const cell = document.createElement("div");
+            cell.className = "board-cell";
+            cell.dataset.row = row;
+            cell.dataset.column = column;
+            board.appendChild(cell);
+        }
+    }
 }
