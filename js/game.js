@@ -9,7 +9,7 @@ const elements = [
     {
         id: "water",
         name: "Water",
-        image: "assets/game/elements/wanter.png"
+        image: "assets/game/elements/water.png"
     },
     {
         id: "earth",
@@ -24,7 +24,7 @@ const elements = [
     {
         id: "light",
         name: "Light",
-        image: "assets/game/light.png"
+        image: "assets/game/elements/light.png"
     },
     {
         id: "shadow",
@@ -87,9 +87,21 @@ function createBoard(board){
             image.className = "game-piece";
             cell.dataset.element = element.id;
             cell.appendChild(image);
+            cell.addEventListener("click", () => {
+                selectCell(board, cell);
+            });
             board.appendChild(cell);
         }
     }
+}
+
+function selectCell(board, cell){
+    const previousCell =
+        board.querySelector(".selected");
+    if(previousCell){
+        previousCell.classList.remove("selected");
+    }
+    cell.classList.add("selected")
 }
 
 function getRandomElement(){
