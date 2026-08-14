@@ -98,14 +98,84 @@ function createBoard(board){
 function selectCell(board, cell){
     const previousCell =
         board.querySelector(".selected");
-    if(previousCell){
-        previousCell.classList.remove("selected");
+    if(!previousCell){
+        cell.classList.add("selected");
+        return;
     }
-    cell.classList.add("selected")
+    if (areAdjacent(previousCell, cell)){
+        swapCells(previousCell, cell);
+    }
+    else {
+        previousCell.classList.remove("selected");
+        cell.classList.add("selected");
+    }
+}
+
+function areAdjacent(firstCell, secondCell){
+    const firstRow =
+        Number(firstCell.dataset.row);
+    const firstColumn =
+        Number(firstCell.dataset.column);
+    const secondRow =
+        Number(secondCell.dataset.row);
+    const secondColumn =
+        Number(secondCell.dataset.column);
+    const rowDifference =
+        Math.abs(firstRow - secondRow);
+    const coliumnDifference =
+        Math.abs(firstColumn - secondColumn);
+    const horizontal =
+        rowDifference === 0 &&
+        coliumnDifference === 1;
+    const vertical =
+        rowDifference === 1 &&
+        coliumnDifference === 0;
+
+        return horizontal || vertical;
+}
+
+function swapCells(firstCell, secondCell){
+    const firstElement =
+        firstCell.dataset.element;
+    const firstImage =
+        firstCell.querySelector(".game-piece");
+    const firstSrc =
+        firstImage.src;
+    const firtAlt =
+        firstImage.alt;
+    const secondElement =
+        secondCell.dataset.element;
+    const secondImage =
+        secondCell.querySelector(".game-piece");
+    const secondSrc =
+        secondImage.src;
+    const secondAlt =
+        secondImage.alt;
+
+
+    firstCell.dataset.element =
+        secondElement;
+    secondCell.dataset.element =
+        firstElement;
+    firstImage.src = secondImage.src;
+    firstImage.alt = secondAlt;
+    secondImage.src = firstSrc;
+    secondImage.alt = firstAlt;
+
+    firstCell.classListremove("selected");
+    secondCell.classList.remove("selected");
 }
 
 function getRandomElement(){
     const randomIndex =
         Math.floor(Math.random() * elements.length);
         return elements[randomIndex];
+}
+
+function getElementImage(elementId){
+    const element = 
+        elements.find(
+                item => item.id === elementId
+        );
+        return element.image;
 }
