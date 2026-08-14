@@ -1,4 +1,5 @@
 const BOARD_SIZE = 8;
+let boardBusy = false;
 
 const elements = [
     {
@@ -96,16 +97,26 @@ function createBoard(board){
 }
 
 function selectCell(board, cell){
+    if (boardBusy){
+        return;
+    }
+
     const previousCell =
         board.querySelector(".selected");
-    if(!previousCell){
+    
+    if (!previousCell){
         cell.classList.add("selected");
         return;
     }
+
+    if (previousCell === cell){
+        cell.classList.remove("selected");
+        return;
+    }
+
     if (areAdjacent(previousCell, cell)){
         swapCells(previousCell, cell);
-    }
-    else {
+    } else {
         previousCell.classList.remove("selected");
         cell.classList.add("selected");
     }
@@ -134,85 +145,57 @@ function areAdjacent(firstCell, secondCell){
         return horizontal || vertical;
 }
 
-function swapCells(firstCell, secondCell){
+function swapCells(firstCell, secondCell) {
+    boardBusy = true;
+
+    firstCell.classList.remove("selected");
+    secondCell.classList.remove("selected");
+
     const firstImage =
         firstCell.querySelector(".game-piece");
     const secondImage =
         secondCell.querySelector(".game-piece");
-    const firstRow =
-        Number(firstCell.dataset.row);
-    const firstColumn =
-        Number(firstCell.dataset.column);
-    const secondRow =
-        Number(secondCell.dataset.row);
-    const secondColumn =
-        Number(secondCell.dataset.column);
-    const rowDifference =
-        secondRow - firstRow;
-    const columnDifference =
-        secondColumn - firstColumn;
+    const firstRect =
+        firstCell.getBoundingClientRect();
+    const secondRect =
+        secondCell.getBoundingClientRect();
 
-    if (columnDifference === 1){
-        firstImage.classList.add("swap-right");
-        secondImage.classList.add("swap-left");
-    }
+    const xDistance =
+        secondRect.left - firstRect.left;
+    const yDistance =
+        secondRect.top - firstRect.top;
 
-    else if (columnDifference === -1){
-        firstImage.classList.add("swap-left");
-        secondImage.classList.add("swap-right");
-    }
+    firstImage.style.transform =
+        "translate(0, 0)";
+    secondImage.style.transform =
+        "translate(0, 0)";
 
-    else if (rowDifference === 1){
-        firstImage.classLoist.add("swap-down");
-        secondImage.classList.add("swap-up");
-    }
+    firstImage.offsetWidth;
 
-    else if (rowDifference === -1){
-        firstImage.classList.add("swap-up");
-        secondImage.classList.add("swap-down")
-    }
+    firstImage.style.transform =
+        `translate(${xDistance}px, ${yDistance}px)`;
+    secondImage.style.transform =
+        `translate(${-xDistance}px, ${-yDistance}px)`;
 
     setTimeout(() => {
         const firstElement =
             firstCell.dataset.element;
-        const firstSrc =
-            firstImage.src;
-        const firstAlt =
-            firstImage.alt;
         const secondElement =
             secondCell.dataset.element;
-        const secondSrc =
-            secondCell.Image.src;
-        const secondAlt =
-            secondImage.alt;
 
         firstCell.dataset.element =
             secondElement;
         secondCell.dataset.element =
             firstElement;
 
-        firstImage.src = secondSrc;
-        firstImage.alt = secondAlt;
-        secondImage.src = firstSrc;
-        secondImage.alt = firstAlt;
+        firstCell.appendChild(secondImage);
+        secondCell.appendChild(firstImage);
 
-        firstImage.classList.remove(
-            "swap-left",
-            "swap-right",
-            "swap-up",
-            "swap-down"
-        );
+        firstImage.style.transform = "";
+        secondImage.style.transform = "";
 
-        secondImage.classList.remove(
-            "swap-left",
-            "swap-right",
-            "swap-up",
-            "swap-down"
-        );
-
-        firstCell.classList.remove("selected");
-        secondCell.classList.remove("selected")
-    },  160);
+        boardBusy = false;
+    }, 180);
 }
 
 function getRandomElement(){
