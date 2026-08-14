@@ -135,35 +135,84 @@ function areAdjacent(firstCell, secondCell){
 }
 
 function swapCells(firstCell, secondCell){
-    const firstElement =
-        firstCell.dataset.element;
     const firstImage =
         firstCell.querySelector(".game-piece");
-    const firstSrc =
-        firstImage.src;
-    const firtAlt =
-        firstImage.alt;
-    const secondElement =
-        secondCell.dataset.element;
     const secondImage =
         secondCell.querySelector(".game-piece");
-    const secondSrc =
-        secondImage.src;
-    const secondAlt =
-        secondImage.alt;
+    const firstRow =
+        Number(firstCell.dataset.row);
+    const firstColumn =
+        Number(firstCell.dataset.column);
+    const secondRow =
+        Number(secondCell.dataset.row);
+    const secondColumn =
+        Number(secondCell.dataset.column);
+    const rowDifference =
+        secondRow - firstRow;
+    const columnDifference =
+        secondColumn - firstColumn;
 
+    if (columnDifference === 1){
+        firstImage.classList.add("swap-right");
+        secondImage.classList.add("swap-left");
+    }
 
-    firstCell.dataset.element =
-        secondElement;
-    secondCell.dataset.element =
-        firstElement;
-    firstImage.src = secondImage.src;
-    firstImage.alt = secondAlt;
-    secondImage.src = firstSrc;
-    secondImage.alt = firstAlt;
+    else if (columnDifference === -1){
+        firstImage.classList.add("swap-left");
+        secondImage.classList.add("swap-right");
+    }
 
-    firstCell.classListremove("selected");
-    secondCell.classList.remove("selected");
+    else if (rowDifference === 1){
+        firstImage.classLoist.add("swap-down");
+        secondImage.classList.add("swap-up");
+    }
+
+    else if (rowDifference === -1){
+        firstImage.classList.add("swap-up");
+        secondImage.classList.add("swap-down")
+    }
+
+    setTimeout(() => {
+        const firstElement =
+            firstCell.dataset.element;
+        const firstSrc =
+            firstImage.src;
+        const firstAlt =
+            firstImage.alt;
+        const secondElement =
+            secondCell.dataset.element;
+        const secondSrc =
+            secondCell.Image.src;
+        const secondAlt =
+            secondImage.alt;
+
+        firstCell.dataset.element =
+            secondElement;
+        secondCell.dataset.element =
+            firstElement;
+
+        firstImage.src = secondSrc;
+        firstImage.alt = secondAlt;
+        secondImage.src = firstSrc;
+        secondImage.alt = firstAlt;
+
+        firstImage.classList.remove(
+            "swap-left",
+            "swap-right",
+            "swap-up",
+            "swap-down"
+        );
+
+        secondImage.classList.remove(
+            "swap-left",
+            "swap-right",
+            "swap-up",
+            "swap-down"
+        );
+
+        firstCell.classList.remove("selected");
+        secondCell.classList.remove("selected")
+    },  160);
 }
 
 function getRandomElement(){
