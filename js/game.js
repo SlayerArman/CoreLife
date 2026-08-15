@@ -247,14 +247,14 @@ function collapseBoard(board){
         for (let row = BOARD_SIZE - 1; row >= 0; row--){
             const cell =
                 board.querySelector(
-                    `[data-row="${row}"][data-column="${column}"]`
-                );
+                    `[data-row="${row}"][data-column="${column}"]`);
             
-            if (cell.dataset.element){
-                const targetCell =
-                    board.querySelector(
-                        `[data-row="${emptyRow}"][data-column="${column}"]`
-                    );
+            if (!cell.dataset.element){
+                continue;
+            }
+
+            const targetCell =
+                board.querySelector(`[data-row="${emptyRow}"][data-column="${column}"]`);
 
             if (targetCell !== cell){
                 const image =
@@ -264,9 +264,14 @@ function collapseBoard(board){
                 targetCell.appendChild(image);
                 
                 delete cell.dataset.element;
-                }
-                emptyRow--;
+
+                image.classList.add("falling");
+
+                setTimeout(() => {
+                    image.classList.remove("falling");
+                }, 180);
             }
+            emptyRow--;
         }
     }
 }

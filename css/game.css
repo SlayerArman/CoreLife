@@ -183,3 +183,18 @@
         transform 180ms ease,
         opacity 180ms ease;
 }
+
+.game-piece.falling{
+    animation: piece-fall 180ms ease-out;
+}
+
+@keyframes piece-fall{
+    from{
+        transform: translateY(-20px);
+        opacity: 0.7;
+    }
+    to{
+        transform: translateY(0);
+        opacit: 1;
+    }
+}
