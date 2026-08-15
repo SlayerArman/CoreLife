@@ -198,3 +198,18 @@
         opacit: 1;
     }
 }
+
+.game.piece.new-piece{
+    animation: piece-spawn 180ms ease-out;
+}
+
+@keyframes piece-spawn{
+    from{
+        transform: translateY(-20px) scale(0.8);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}

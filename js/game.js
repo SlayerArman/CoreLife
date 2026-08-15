@@ -236,7 +236,8 @@ function removeMatches(board, matches){
             delete cell.dataset.element;
             cell.classList.remove("match-removing");
         });
-        collapseBoard(board)
+        collapseBoard(board);
+        refillBoard(board);
     }, 180);
 }
 
@@ -259,7 +260,7 @@ function collapseBoard(board){
             if (targetCell !== cell){
                 const image =
                     cell.querySelector(".game-piece");
-                targetCell.dataset.elements =
+                targetCell.dataset.element =
                     cell.dataset.element;
                 targetCell.appendChild(image);
                 
@@ -272,6 +273,43 @@ function collapseBoard(board){
                 }, 180);
             }
             emptyRow--;
+        }
+    }
+}
+
+function refillBoard(board){
+    for (let row =0; row < BOARD_SIZE; row++){
+        for ( let column = 0; column < BOARD_SIZE; column++){
+            const cell =
+                board.querySelector(`[data-row="${row}"][data-column="${column}"]`);
+
+            if (cell.dataset.element){
+                continue;
+            }
+
+            const element =
+                getRandomElement();
+
+            const image =
+                document.createElement("img");
+
+            image.src =
+                element.image;
+            image.alt =
+                element.name;
+            image.className =
+                "game-piece";
+
+            cell.dataset.element =
+                element.id;
+
+            cell.appendChild(image);
+
+            image.classList.add("new-piece");
+
+            setTimeout(() => {
+                image.classList.remove("new-piece");
+            }, 180);
         }
     }
 }
