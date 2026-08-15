@@ -145,6 +145,75 @@ function areAdjacent(firstCell, secondCell){
         return horizontal || vertical;
 }
 
+function findMatches(board){
+    const matchedCells = new Set();
+
+    for (let row = 0; row < BOARD_SIZE; row++){
+        let currentType = null;
+        let currentCells = [];
+
+        for (let column = 0; column < BOARD_SIZE; column++){
+            const cell =
+                board.querySelector(
+                    `[data-row="${row}"][data-column="${column}"]`
+                );
+            const element =
+                cell.dataset.element;
+
+            if (element === currentType){
+                currentCells.push(cell);
+            } else {
+                if (currentCells.length >= 3){
+                    currentCells.forEach(
+                        match => matchedCells.add(match)
+                    );
+                }
+                currentType = element;
+                currentCells = [cell];
+            }
+        }
+
+        if (currentCells.length >= 3){
+            currentCells.forEach(
+                match => matchedCells.add(match)
+            );
+        }
+    }
+
+    for (let column = 0; column < BOARD_SIZE; column++){
+        let currentType = null;
+        let currentCells = [];
+
+        for (let row = 0; row < BOARD_SIZE; row++){
+            const cell =
+                board.querySelector(
+                    `[data-row="${row}"][data-column="${column}"]`
+                );
+            const element =
+                cell.dataset.element;
+
+            if (element === currentType){
+                currentCells.push(cell);
+            } else {
+                if (currentCells.length >= 3){
+                    currentCells.forEach(
+                        match => matchedCells.add(match)
+                    );
+                }
+                currentType = element;
+                currentCells = [cell];
+            }
+        }
+
+        if (currentCells.length >= 3){
+            currentCells.forEach(
+                match => matchedCells.add(match)
+            );
+        }
+    }
+    return matchedCells;
+}
+
 function swapCells(firstCell, secondCell) {
     boardBusy = true;
 
