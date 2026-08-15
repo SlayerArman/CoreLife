@@ -1,5 +1,8 @@
 const BOARD_SIZE = 8;
+const LEVEL_GOAL = 200;
+
 let boardBusy = false;
+let score = 0;
 
 const elements = [
     {
@@ -35,16 +38,25 @@ const elements = [
 ];
 
 export function startGame(page){
+    
+    score = 0;
+    boardBusy = false;
+
     const gameOverlay = document.createElement("div");
     gameOverlay.className = "game-overlay";
 
     gameOverlay.innerHTML = `
         <div class="game-window">
             <div class="game-header">
-                <h2>
-                    Level ${page.level}
-                </h2>
-                
+                <div>
+                    <h2>
+                        Level ${page.level}
+                    </h2>
+
+                    <p class="game-progress">
+                        Elements: 0 / ${LEVEL_GOAL}
+                    </p>
+                </div>
                 <button
                     class="game-exit"
                     type="button">
@@ -220,6 +232,21 @@ function removeMatches(board, matches){
         return;
     }
 
+    score += matches.size;
+
+    const progress =
+        board.closest(".game-window")
+            .querySelector(".game-progress");
+
+    progress.textContent =
+        `Elements: ${Math.min(score, LEVEL_GOAL)} / ${LEVEL_GOAL}`;
+
+    if (score >= LEVEL_GOAL){
+        setTimeout(() => {
+            completeLevel(board);
+        }, 400);
+    }
+
     matches.forEach(cell => {
         cell.classList.add("match-removing");
     });
@@ -239,6 +266,46 @@ function removeMatches(board, matches){
         collapseBoard(board);
         refillBoard(board);
     }, 180);
+}
+
+function completeLevel(board){
+    boardBusy = true;
+
+    const gameWindow =
+        board.closest(".game-window");
+
+    const gameArea =
+        gameWindow.querySelector(".game-area");
+
+    gameArea.innerHTML = `
+        <div class="level-complete">
+            <h2>
+                Level Complete!
+            </h2>
+
+            <p>
+                You Cleared enough elements.
+            </p>
+            
+            <button
+                class="continue-button"
+                type="button">
+                Continue
+            </button>
+        </div>
+    `;
+
+    const continueButton =
+        gameArea.querySelector(".continue-button");
+
+    continueButton.addEventListener(
+        "click", () => {
+            gameWindow
+                .closest(".game-overlay")
+                .remove();
+        }
+    )
+            
 }
 
 function collapseBoard(board){

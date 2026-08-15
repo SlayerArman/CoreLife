@@ -213,3 +213,36 @@
         opacity: 1;
     }
 }
+
+.level-complete{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+}
+
+.level-complete h2{
+    font-size: 28px;
+}
+
+.level-complete p{
+    color: #aaa;
+}
+
+.continue-button{
+    margin-top: 12px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    background: #3d6d46;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.continue-button:hover{
+    background: #4b8556;
+}
