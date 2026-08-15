@@ -214,7 +214,7 @@ function findMatches(board){
     return matchedCells;
 }
 
-function removeMatches(matches){
+function removeMatches(board, matches){
 
     if (matches.size === 0){
         return;
@@ -236,7 +236,39 @@ function removeMatches(matches){
             delete cell.dataset.element;
             cell.classList.remove("match-removing");
         });
+        collapseBoard(board)
     }, 180);
+}
+
+function collapseBoard(board){
+    for (let column = 0; column < BOARD_SIZE; column++){
+        let emptyRow = BOARD_SIZE - 1;
+
+        for (let row = BOARD_SIZE - 1; row >= 0; row--){
+            const cell =
+                board.querySelector(
+                    `[data-row="${row}"][data-column="${column}"]`
+                );
+            
+            if (cell.dataset.element){
+                const targetCell =
+                    board.querySelector(
+                        `[data-row="${emptyRow}"][data-column="${column}"]`
+                    );
+
+            if (targetCell !== cell){
+                const image =
+                    cell.querySelector(".game-piece");
+                targetCell.dataset.elements =
+                    cell.dataset.element;
+                targetCell.appendChild(image);
+                
+                delete cell.dataset.element;
+                }
+                emptyRow--;
+            }
+        }
+    }
 }
 
 function swapCells(board, firstCell, secondCell) {
@@ -295,7 +327,7 @@ function swapCells(board, firstCell, secondCell) {
             "Matches found:",
             matches.size);
 
-        removeMatches(matches);
+        removeMatches(board, matches);
 
         setTimeout(() => {
             boardBusy = false;
