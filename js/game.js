@@ -115,7 +115,7 @@ function selectCell(board, cell){
     }
 
     if (areAdjacent(previousCell, cell)){
-        swapCells(previousCell, cell);
+        swapCells(board, previousCell, cell);
     } else {
         previousCell.classList.remove("selected");
         cell.classList.add("selected");
@@ -133,14 +133,14 @@ function areAdjacent(firstCell, secondCell){
         Number(secondCell.dataset.column);
     const rowDifference =
         Math.abs(firstRow - secondRow);
-    const coliumnDifference =
+    const columnDifference =
         Math.abs(firstColumn - secondColumn);
     const horizontal =
         rowDifference === 0 &&
-        coliumnDifference === 1;
+        columnDifference === 1;
     const vertical =
         rowDifference === 1 &&
-        coliumnDifference === 0;
+        columnDifference === 0;
 
         return horizontal || vertical;
 }
@@ -214,7 +214,32 @@ function findMatches(board){
     return matchedCells;
 }
 
-function swapCells(firstCell, secondCell) {
+function removeMatches(matches){
+
+    if (matches.size === 0){
+        return;
+    }
+
+    matches.forEach(cell => {
+        cell.classList.add("match-removing");
+    });
+
+    setTimeout(() => {
+        matches.forEach(cell => {
+            const image =
+                cell.querySelector(".game-piece");
+
+            if (image){
+                image.remove();
+            }
+
+            delete cell.dataset.element;
+            cell.classList.remove("match-removing");
+        });
+    }, 180);
+}
+
+function swapCells(board, firstCell, secondCell) {
     boardBusy = true;
 
     firstCell.classList.remove("selected");
@@ -263,7 +288,18 @@ function swapCells(firstCell, secondCell) {
         firstImage.style.transform = "";
         secondImage.style.transform = "";
 
-        boardBusy = false;
+        const matches =
+            findMatches(board);
+
+        console.log(
+            "Matches found:",
+            matches.size);
+
+        removeMatches(matches);
+
+        setTimeout(() => {
+            boardBusy = false;
+        }, 180);
     }, 180);
 }
 
