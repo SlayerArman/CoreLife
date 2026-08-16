@@ -23,7 +23,7 @@ function handleLevelComplete(page){
         "Complete level:",
         page.level
     );
-    unlockNextPage(page.level)
+    unlockNextPage(page.level);
 
     createLevelNavigation(handlePageSelect, handleLockedPage);
 }

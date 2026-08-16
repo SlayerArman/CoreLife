@@ -29,14 +29,20 @@ export function createLevelNavigation(onPageSelect, onLockedPage) {
 }
 
 export function unlockNextPage(level){
+    console.log("Unlocking page after level:", level);
+
     const nextPage =
         pages.find(
-            page => page.level === level + 1
-        );
+            page => page.level === level + 1);
 
-        if (!nextPage){
-            return;
-        }
+    if (!nextPage){
+        console.log("No next page found.");
+        return;
+    }
 
-        nextPage.unlocked = ture;
+    nextPage.unlocked = true;
+
+    console.log("Unlocked:",
+        nextPage.title,
+        nextPage.unlocked);
 }

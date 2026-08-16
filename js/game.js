@@ -76,7 +76,7 @@ export function startGame(page, onLevelComplete){
     const board =
         gameOverlay.querySelector(".match-board");
 
-    createBoard(board);
+    createBoard(board, page, onLevelComplete);
 
     const exitButton =
         gameOverlay.querySelector(".game-exit");
@@ -86,7 +86,7 @@ export function startGame(page, onLevelComplete){
     });
 }
 
-function createBoard(board){
+function createBoard(board, page, onLevelComplete){
     for (let row = 0; row < BOARD_SIZE; row++){
         for (let column = 0; column < BOARD_SIZE; column++){
             const cell = document.createElement("div");
@@ -101,14 +101,14 @@ function createBoard(board){
             cell.dataset.element = element.id;
             cell.appendChild(image);
             cell.addEventListener("click", () => {
-                selectCell(board, cell);
+                selectCell(board, cell, page, onLevelComplete);
             });
             board.appendChild(cell);
         }
     }
 }
 
-function selectCell(board, cell){
+function selectCell(board, cell, page, onLevelComplete){
     if (boardBusy){
         return;
     }
@@ -127,7 +127,7 @@ function selectCell(board, cell){
     }
 
     if (areAdjacent(previousCell, cell)){
-        swapCells(board, previousCell, cell);
+        swapCells(board, previousCell, cell, page, onLevelComplete);
     } else {
         previousCell.classList.remove("selected");
         cell.classList.add("selected");
@@ -226,10 +226,11 @@ function findMatches(board){
     return matchedCells;
 }
 
-function removeMatches(board, matches){
+function removeMatches(board, matches, page, onLevelComplete){
 
     if (matches.size === 0){
-        return;
+        boardBusy = false;
+        return false;
     }
 
     score += matches.size;
@@ -240,12 +241,6 @@ function removeMatches(board, matches){
 
     progress.textContent =
         `Elements: ${Math.min(score, LEVEL_GOAL)} / ${LEVEL_GOAL}`;
-
-    if (score >= LEVEL_GOAL){
-        setTimeout(() => {
-            completeLevel(board);
-        }, 400);
-    }
 
     matches.forEach(cell => {
         cell.classList.add("match-removing");
@@ -265,7 +260,16 @@ function removeMatches(board, matches){
         });
         collapseBoard(board);
         refillBoard(board);
+        boardBusy = false;
+
+        if (score >= LEVEL_GOAL){
+            setTimeout(() => {
+                completeLevel(board, page, onLevelComplete);
+            }, 200);
+        }
     }, 180);
+
+    return true;
 }
 
 function completeLevel(board, page, onLevelComplete){
@@ -394,7 +398,7 @@ function refillBoard(board){
     }
 }
 
-function swapCells(board, firstCell, secondCell) {
+function swapCells(board, firstCell, secondCell, page, onLevelComplete) {
     boardBusy = true;
 
     firstCell.classList.remove("selected");
@@ -404,57 +408,50 @@ function swapCells(board, firstCell, secondCell) {
         firstCell.querySelector(".game-piece");
     const secondImage =
         secondCell.querySelector(".game-piece");
+    const firstElement =
+        firstCell.dataset.element;
+    const secondElement =
+        secondCell.dataset.element;
     const firstRect =
         firstCell.getBoundingClientRect();
     const secondRect =
         secondCell.getBoundingClientRect();
-
     const xDistance =
         secondRect.left - firstRect.left;
     const yDistance =
         secondRect.top - firstRect.top;
 
-    firstImage.style.transform =
-        "translate(0, 0)";
-    secondImage.style.transform =
-        "translate(0, 0)";
-
+    firstImage.style.transform = "translate(0, 0)";
+    secondImage.style.transform = "translate(0, 0)";
     firstImage.offsetWidth;
-
-    firstImage.style.transform =
-        `translate(${xDistance}px, ${yDistance}px)`;
-    secondImage.style.transform =
-        `translate(${-xDistance}px, ${-yDistance}px)`;
+    firstImage.style.transform = `translate(${xDistance}px, ${yDistance}px)`;
+    secondImage.style.transform = `translate(${-xDistance}px, ${-yDistance}px)`;
 
     setTimeout(() => {
-        const firstElement =
-            firstCell.dataset.element;
-        const secondElement =
-            secondCell.dataset.element;
-
-        firstCell.dataset.element =
-            secondElement;
-        secondCell.dataset.element =
-            firstElement;
-
+        firstCell.dataset.element = secondElement;
+        secondCell.dataset.element = firstElement;
         firstCell.appendChild(secondImage);
         secondCell.appendChild(firstImage);
-
         firstImage.style.transform = "";
         secondImage.style.transform = "";
 
-        const matches =
-            findMatches(board);
+        const matches = findMatches(board);
 
-        console.log(
-            "Matches found:",
-            matches.size);
+        console.log("matches found:", matches.size);
 
-        removeMatches(board, matches);
+        if (matches.size === 0) {
+            firstCell.dataset.element =
+                secondElement;
+            secondCell.dataset.element =
+                firstElement;
 
-        setTimeout(() => {
+            firstCell.appendChild(secondImage);
+            secondCell.appendChild(firstImage);
             boardBusy = false;
-        }, 180);
+            return;
+        }
+
+        removeMatches(board, matches, page, onLevelComplete);
     }, 180);
 }
 
