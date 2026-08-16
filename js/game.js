@@ -1,5 +1,5 @@
 const BOARD_SIZE = 8;
-const LEVEL_GOAL = 200;
+const LEVEL_GOAL = 10;
 
 let boardBusy = false;
 let score = 0;
@@ -37,7 +37,7 @@ const elements = [
     }
 ];
 
-export function startGame(page){
+export function startGame(page, onLevelComplete){
     
     score = 0;
     boardBusy = false;
@@ -268,7 +268,7 @@ function removeMatches(board, matches){
     }, 180);
 }
 
-function completeLevel(board){
+function completeLevel(board, page, onLevelComplete){
     boardBusy = true;
 
     const gameWindow =
@@ -298,14 +298,27 @@ function completeLevel(board){
     const continueButton =
         gameArea.querySelector(".continue-button");
 
+    if (!continueButton){
+        console.error("Continue button wanst found");
+        return;
+    }
+
     continueButton.addEventListener(
         "click", () => {
-            gameWindow
-                .closest(".game-overlay")
-                .remove();
+            console.log("Conitnue clicked");
+            if (onLevelComplete){
+                onLevelComplete(page);
+            } else {
+                console.error("onLevelComplete callbak is missing.");
+            }
+            const overlay =
+                gameWindow.closest(".game-overlay");
+
+            if (overlay){
+                overlay.remove();
+            }
         }
-    )
-            
+    );       
 }
 
 function collapseBoard(board){

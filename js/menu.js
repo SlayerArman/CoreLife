@@ -27,3 +27,16 @@ export function createLevelNavigation(onPageSelect, onLockedPage) {
         levelList.appendChild(button);
     }
 }
+
+export function unlockNextPage(level){
+    const nextPage =
+        pages.find(
+            page => page.level === level + 1
+        );
+
+        if (!nextPage){
+            return;
+        }
+
+        nextPage.unlocked = ture;
+}
