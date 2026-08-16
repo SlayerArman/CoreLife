@@ -1,3 +1,6 @@
+const SAVED_PROGRESS =
+    JSON.parse(localStorage.getItem("coreLifeProgress")) || {};
+
 export const pages = [
     {
         id: 1,
@@ -140,3 +143,14 @@ export const pages = [
         level: 20
     },
 ];
+
+for (const page of pages){
+    if (page.level === 1){
+        page.unlocked = true;
+        continue;
+    }
+
+    if (SAVED_PROGRESS[page.level] === true){
+        page.unlocked = true;
+    }
+}

@@ -1,4 +1,4 @@
-export function showLockedPageOverlay(page, onPlay){
+export function showLockedPageOverlay(page, requiredLevel, onPlay){
     const overlay = document.createElement("div");
     overlay.className = "overlay";
 
@@ -11,14 +11,14 @@ export function showLockedPageOverlay(page, onPlay){
             <h2>${page.title}</h2>
             
             <p>
-                Complete Level ${page.level}
+                Complete Level ${requiredLevel}
                 to unlock this page.
             </p>
             
             <button 
                 class="overlay-play"
                 type="button">
-                Play Level
+                Play Level ${requiredLevel}
             </button>
         </div>
     `;
@@ -37,6 +37,9 @@ export function showLockedPageOverlay(page, onPlay){
         
             playButton.addEventListener("click", () => {
                 overlay.remove();
-                onPlay(page);
+
+                if (typeof onPlay === "function"){
+                    onPlay();
+                }
             });
 }

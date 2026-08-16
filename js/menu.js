@@ -31,8 +31,7 @@ export function createLevelNavigation(onPageSelect, onLockedPage) {
 export function unlockNextPage(level){
     console.log("Unlocking page after level:", level);
 
-    const nextPage =
-        pages.find(
+    const nextPage = pages.find(
             page => page.level === level + 1);
 
     if (!nextPage){
@@ -41,6 +40,13 @@ export function unlockNextPage(level){
     }
 
     nextPage.unlocked = true;
+
+    const progress =
+        JSON.parse(localStorage.getItem("coreLifeProgress")) || {};
+
+    progress[nextPage.level] = true;
+    localStorage.setItem("coreLifeProgress",
+        JSON.stringify(progress));
 
     console.log("Unlocked:",
         nextPage.title,
