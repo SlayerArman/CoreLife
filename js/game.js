@@ -1,5 +1,5 @@
 const BOARD_SIZE = 8;
-const LEVEL_GOAL = 10;
+const LEVEL_GOAL = 50;
 
 let boardBusy = false;
 let score = 0;
