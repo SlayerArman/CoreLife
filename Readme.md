@@ -28,7 +28,8 @@ This game combines a **match-3 puzzle system** with an interactive **comic-style
 7. If no match is created, the swap is automatically reversed.
 
 ## Screenshots 📸
-
+<img width="959" height="418" alt="Screenshot 2026-08-16 172235" src="https://github.com/user-attachments/assets/73d5ada1-40c9-4032-b1a3-a18bd48809e1" />
+<img width="944" height="416" alt="Screenshot 2026-08-16 172211" src="https://github.com/user-attachments/assets/1d3a4f87-ef3a-4588-9514-d1e8d47f01b7" />
 
 ## Game Logic 🧠
 
